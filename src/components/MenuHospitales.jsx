@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import axios from "axios";
 import Global from "../Global";
 import { Menu, Button } from "@material-tailwind/react";
+import NavLinks from "./NavLinks";
 
 const MenuHospitales = () => {
   const [hospitales, setHospitales] = useState([]);
   const urlHospitales = Global.apiHospitales;
+  let location = useLocation();
 
   const loadHospitales = () => {
     let request = "webresources/hospitales";
@@ -22,14 +24,14 @@ const MenuHospitales = () => {
 
   return (
     <nav className="relative bg-gray-800">
-      <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-        <div className="relative flex h-16 items-center justify-between">
+      <div className="px-2 mx-auto max-w-7xl sm:px-6 lg:px-8">
+        <div className="relative flex items-center justify-between h-16">
           <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
             <button
               type="button"
               command="--toggle"
               commandfor="mobile-menu"
-              className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-white/5 hover:text-white focus:outline focus:outline-2 focus:-outline-offset-1 focus:outline-indigo-500"
+              className="relative inline-flex items-center justify-center p-2 text-gray-400 rounded-md hover:bg-white/5 hover:text-white focus:outline focus:outline-2 focus:-outline-offset-1 focus:outline-indigo-500"
             >
               <span className="absolute -inset-0.5"></span>
               <span className="sr-only">Open main menu</span>
@@ -65,35 +67,32 @@ const MenuHospitales = () => {
               </svg>
             </button>
           </div>
-          <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-            <div className="flex shrink-0 items-center">
+          <div className="flex items-center justify-center flex-1 sm:items-stretch sm:justify-start">
+            <div className="flex items-center shrink-0">
               <img
                 src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
                 alt="Your Company"
-                className="h-8 w-auto"
+                className="w-auto h-8"
               />
             </div>
             <div className="hidden sm:ml-6 sm:block">
               <div className="flex space-x-4">
-                <NavLink
-                  to="/"
-                  aria-current="page"
-                  className="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
-                >
-                  Home
-                </NavLink>
-                <NavLink
-                  to="/createhospital"
-                  className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white"
-                >
-                  Crear hospital
-                </NavLink>
-                <NavLink
-                  to="/doctores/22"
-                  className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white"
-                >
-                  Doctores 22
-                </NavLink>
+                {NavLinks.map((link, index) => {
+                  return (
+                    <NavLink
+                      key={index}
+                      to={link.to}
+                      aria-current="page"
+                      className={
+                        location.pathname === link.to
+                          ? "rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
+                          : "rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white"
+                      }
+                    >
+                      {link.name}
+                    </NavLink>
+                  );
+                })}
                 <Menu>
                   <Menu.Trigger as={Button}>Doctores</Menu.Trigger>
                   <Menu.Content>
@@ -118,7 +117,7 @@ const MenuHospitales = () => {
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
             <button
               type="button"
-              className="relative rounded-full p-1 text-gray-400 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-indigo-500"
+              className="relative p-1 text-gray-400 rounded-full focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-indigo-500"
             >
               <span className="absolute -inset-1.5"></span>
               <span className="sr-only">View notifications</span>
@@ -146,7 +145,7 @@ const MenuHospitales = () => {
                 <img
                   src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                   alt=""
-                  className="size-8 rounded-full bg-gray-800 outline outline-1 -outline-offset-1 outline-white/10"
+                  className="bg-gray-800 rounded-full size-8 outline outline-1 -outline-offset-1 outline-white/10"
                 />
               </button>
 
@@ -184,29 +183,29 @@ const MenuHospitales = () => {
         hidden
         className="sm:hidden [&:not([hidden])]:block"
       >
-        <div className="space-y-1 px-2 pb-3 pt-2">
+        <div className="px-2 pt-2 pb-3 space-y-1">
           <a
             href="#"
             aria-current="page"
-            className="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white"
+            className="block px-3 py-2 text-base font-medium text-white bg-gray-900 rounded-md"
           >
             Dashboard
           </a>
           <a
             href="#"
-            className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-white/5 hover:text-white"
+            className="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-white/5 hover:text-white"
           >
             Team
           </a>
           <a
             href="#"
-            className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-white/5 hover:text-white"
+            className="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-white/5 hover:text-white"
           >
             Projects
           </a>
           <a
             href="#"
-            className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-white/5 hover:text-white"
+            className="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-white/5 hover:text-white"
           >
             Calendar
           </a>

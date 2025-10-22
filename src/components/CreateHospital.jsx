@@ -2,9 +2,11 @@ import React, { useState, useRef } from "react";
 import { Input, Typography, Button } from "@material-tailwind/react";
 import Global from "../Global";
 import axios from "axios";
+import { Navigate } from "react-router-dom";
 
 const CreateHospital = () => {
   const [mensaje, setMensaje] = useState("");
+  const [status, setStatus] = useState(false);
   const cajaId = useRef();
   const cajaNombre = useRef();
   const cajaDireccion = useRef();
@@ -27,6 +29,7 @@ const CreateHospital = () => {
 
     axios.post(urlHospitales + request, hospital).then((response) => {
       setMensaje("Hospital insertado: " + hospital.nombre);
+      setStatus(true);
       limpiarInputs();
     });
   };
@@ -41,7 +44,8 @@ const CreateHospital = () => {
 
   return (
     <div className="flex flex-col m-4">
-      <h1 className="text-sky-600 text-2xl">Crear Hospital</h1>
+      {status === true && <Navigate to="/hospitales" />}
+      <h1 className="text-2xl text-sky-600">Crear Hospital</h1>
       <form className="flex flex-col gap-2 my-4">
         <Typography
           as="label"
@@ -112,7 +116,7 @@ const CreateHospital = () => {
           Crear Hospital
         </Button>
       </form>
-      <h2 className="text-emerald-600 font-bold">{mensaje}</h2>
+      <h2 className="font-bold text-emerald-600">{mensaje}</h2>
     </div>
   );
 };

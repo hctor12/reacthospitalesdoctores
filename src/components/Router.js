@@ -5,6 +5,7 @@ import Home from "./Home";
 import Doctores from "./Doctores";
 import DetallesDoctor from "./DetallesDoctor";
 import CreateHospital from "./CreateHospital";
+import Hospitales from "./Hospitales";
 
 const Router = () => {
   const DoctoresElement = () => {
@@ -25,6 +26,7 @@ const Router = () => {
         <Route path="/doctores/:idHospital" element={<DoctoresElement />} />
         <Route path="/doctor/:idDoctor" element={<DoctorElement />} />
         <Route path="/createhospital" element={<CreateHospital />} />
+        <Route path="/hospitales" element={<Hospitales />} />
       </Routes>
     </BrowserRouter>
   );
